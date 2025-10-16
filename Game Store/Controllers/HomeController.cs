@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Game_Store.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game_Store.Controllers
@@ -23,10 +22,5 @@ namespace Game_Store.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
