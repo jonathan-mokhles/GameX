@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Sign in";
+}
+@model SignInDTO
+
+<section class="section">
+    <div class="container">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="auth-container">
+                <!-- Login Form -->
+                <div class="auth-form" id="signin-form">
+                    <h4>Welcome Back!</h4>
+                    <form asp-controller="Account" asp-action="SignIn" method="post" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]" id="loginForm">
+                        <div class="form-group">
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" placeholder="Enter your password" required>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input asp-for="RememberMe" class="form-check-input">
+                                <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="orange-button btn-block">Sign In</button>
+                        @if(ViewData.ModelState.ErrorCount > 0)
+                        {
+                            <div class="alert alert-danger mt-3">
+                                <ul>
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        <div class="auth-footer">
+                            <p>Don't have an account? <a asp-action="Register" asp-controller="Account">Register Now</a></p>
+                        </div>
+                    </form>
+                   </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

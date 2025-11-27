@@ -1,25 +1,9 @@
-using GameStore.Core.Domain.IdentityEntities;
-using GameStore.Core.Domain.RepositoryContracts;
-using GameStore.Infrastructure.DbContext;
-using GameStore.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
+using Game_Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddGameStoreServices(builder.Configuration);
 
 
 var app = builder.Build();
@@ -32,14 +16,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseRouting();
+//app.UseHsts();// Enforce HTTP Strict Transport Security
+//app.UseHttpsRedirection(); // Redirect HTTP requests to HTTPS
 
+app.UseStaticFiles(); 
+app.UseRouting(); // Choose endpoint based on request
+app.UseAuthentication(); // Reading Identity Cookies
+app.UseAuthorization(); // Check user permissions
+app.MapControllers();// Map attribute routed controllers
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
 
 
 app.Run();

@@ -1,26 +1,68 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>@ViewData["Title"] - Game_Store</title>
-    <script type="importmap"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <title>@ViewData["Title"]</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="~/css/fontawesome.css" />
-    <link rel="stylesheet" href="~/css/animate.css"  />
-    <link rel="stylesheet" href="~/css/owl.css"  />
-    <link rel="stylesheet" href="~/css/templatemo-lugx-gaming.css" />
+    <link rel="stylesheet" href="~/css/fontawesome.css">
+    <link rel="stylesheet" href="~/css/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="~/css/owl.css">
+    <link rel="stylesheet" href="~/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <style>
+        .dropdown-menu {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+            border: none;
+            padding: 10px 0;
+        }
 
+        .dropdown-item {
+            padding: 10px 25px;
+            color: #1e1e1e;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+            .dropdown-item:hover {
+                background-color: #f7f7f7;
+                color: #0071f8;
+            }
+
+            .dropdown-item i {
+                margin-right: 8px;
+                width: 20px;
+            }
+
+        .dropdown-divider {
+            margin: 5px 15px;
+            border-top-color: #e7e7e7;
+        }
+
+        .dropdown-item button {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+    </style>
 
 </head>
+
 <body>
+
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -33,10 +75,8 @@
         </div>
     </div>
     <!-- ***** Preloader End ***** -->
-
-
     <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
+    <header class="header-area header-sticky background-header">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -48,12 +88,77 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Our Shop</a></li>
-                            <li><a href="product-details.html">Product Details</a></li>
-                            <li><a href="contact.html" class="active">Contact Us</a></li>
-                            <li><a href="#">Sign In</a></li>
-                        </ul>
+
+                            @if (ViewData["ActivePage"] == "Home")
+                                {
+                                    <li><a asp-controller="home" asp-action="index"  class="active" >Home</a></li>
+                                }
+                             else
+                                {
+                                   <li><a asp-controller="home" asp-action="index" >Home</a></li>
+                                }
+                            @if (ViewData["ActivePage"] == "OurShop")
+                            {
+                                <li><a href="shop.html" class="active">Our Shop</a></li>
+                            }
+                            else{
+                                <li><a href="shop.html">Our Shop</a></li>
+                            }
+                            @if (User.IsInRole("Admin") && ViewData["ActivePage"] == "Admin")
+                                {
+                                    <li><a href="Admin.html">Admin panel</a></li>
+                                }
+                            else if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="Admin.html">Admin panel</a></li>
+                                }
+                            @if(ViewData["ActivePage"] == "About Us"){
+                                    <li><a asp-controller="home" asp-action="about" class="active" >About Us</a></li>
+                            }
+                            else{
+                                    <li><a asp-controller="home" asp-action="about" >About Us</a></li>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="user-menu-item">
+                                    <a href="javascript:void(0);" class="user-toggle">
+                                        <i class="fa fa-user"></i> @(User.Identity?.Name?.Split("@")[0]) <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="user-dropdown">
+                                        <li><a asp-controller="Account" asp-action="Profile"><i class="fa fa-user-circle"></i> My Profile</a></li>
+                                        <li><a asp-controller="Order" asp-action="MyOrders"><i class="fa fa-shopping-bag"></i> My Orders</a></li>
+                                        <li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> My Cart</a></li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <form asp-controller="Account" asp-action="Logout" method="post" style="margin: 0;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="logout-btn"><i class="fa fa-sign-out-alt"></i> Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="user-menu-item">
+                                    <a href="javascript:void(0);" class="user-toggle">
+                                        <i class="fa fa-user"></i> Guest <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="user-dropdown">
+                                        <li>
+                                            <a asp-controller="account" asp-action="signIn">
+                                                <i class="fa-solid fa-right-to-bracket"></i>SignIn
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="account" asp-action="register">
+                                                <i class="fa-solid fa-user-plus"></i>Sign Up
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            }
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -73,18 +178,27 @@
     <footer>
         <div class="container">
             <div class="col-lg-12">
-                <p>Copyright © 2048 LUGX Gaming Company. All rights reserved. &nbsp;&nbsp; <a rel="nofollow" href="https://templatemo.com" target="_blank">Design: TemplateMo</a></p>
+                <p>
+                    Copyright © 2048 LUGX Gaming Company. All rights reserved. &nbsp;&nbsp; <a rel="nofollow"
+                                                                                               href="https://templatemo.com" target="_blank">Design: TemplateMo</a>
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/js/counter.js" asp-append-version="true"></script>
-    <script src="~/js/custom.js" asp-append-version="true"></script>
-    <script src="~/js/isotope.min.js" asp-append-version="true"></script>
-    <script src="~/js/owl-carousel.js" asp-append-version="true"></script>
-
+    <script src="~/js/isotope.min.js"></script>
+    <script src="~/js/owl-carousel.js"></script>
+    <script src="~/js/counter.js"></script>
+    <script src="~/js/custom.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
+
 </body>
+
 </html>
+
