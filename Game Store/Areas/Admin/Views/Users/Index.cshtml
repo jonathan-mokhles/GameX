@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Manage Users";
+    ViewData["AdminNavTitle"] = "Users";
+}
+@model List<UserResponseDTO>
+
+<!-- ***** Admin Content Start ***** -->
+<div class="admin-section section">
+    <div class="container">
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search users by name, email...">
+                        <button class="search-btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="control-actions">
+                        <select class="filter-select" id="roleFilter">
+                            <option value="">All Roles</option>
+                            <option value="admin">Admin</option>
+                            <option value="customer">Customer</option>
+                        </select>
+                        <button class="add-btn" onclick="openAddModal()">
+                            <i class="fa fa-plus"></i> Add New User
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="admin-table-wrapper">
+            <div class="table-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total Users</span>
+                    <span class="stat-value">@Model.Count()</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Admins</span>
+                    <span class="stat-value">@Model.Where(u => u.Role == "Admin").Count()</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Customers</span>
+                    <span class="stat-value">@Model.Where(u => u.Role == "Customer").Count()</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Registered Today</span>
+                    <span class="stat-value">@Model.Where(u => u.RegistrationDate == DateTime.Today).Count()</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll">
+                            </th>
+                            <th>first Name</th>
+                            <th>last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Registration Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td><input type="checkbox" class="row-checkbox"></td>
+                                <td class="id-badge"> @user.Id</td>
+                                <td><span class="user-name first-name">@user.FirstName</span></td>
+                                <td><span class="user-name last-name">@user.LastName</span></td>
+                                <td class="email">@user.Email</td>
+                                <td class="phone">@user.PhoneNumber</td>
+                                <td><span class="role-badge admin">Admin</span></td>
+                                <td>@user.RegistrationDate.ToString("MMM, dd yyyy")</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn edit" title="Edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" title="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+</div>
+
+<div class="modal-overlay" id="userModal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Edit User</h3>
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="userForm">
+                <input type="hidden" name="Id" id="Id">
+                <div class="form-row">
+                    <div class="form-group-modal">
+                        <label>First Name *</label>
+                        <input type="text" class="form-control" name="firstName" id="firstName" required>
+                    </div>
+                    <div class="form-group-modal">
+                        <label>Last Name *</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Email *</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group-modal">
+                        <label>Role *</label>
+                        <select class="form-control" name="role" id="role" required>
+                            <option value="Customer">Customer</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group-modal">
+                        <label>Phone *</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ***** Admin Content End ***** -->

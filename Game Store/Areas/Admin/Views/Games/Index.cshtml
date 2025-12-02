@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "Manage Games";
+    ViewData["AdminNavTitle"] = "Games";
+}
+<div class="admin-section section">
+    <div class="container">
+<!-- Control Panel -->
+<div class="control-panel">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search games by title, genre...">
+                <button class="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="control-actions">
+                <select class="filter-select" id="genreFilter">
+                    <option value="">All Genres</option>
+                    <option value="action">Action</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="rpg">RPG</option>
+                    <option value="sports">Sports</option>
+                    <option value="racing">Racing</option>
+                </select>
+                <select class="filter-select" id="platformFilter">
+                    <option value="">All Platforms</option>
+                    <option value="pc">PC</option>
+                    <option value="ps5">PlayStation 5</option>
+                    <option value="xbox">Xbox Series X/S</option>
+                    <option value="switch">Nintendo Switch</option>
+                </select>
+                <button class="add-btn" onclick="openAddGameModal()">
+                    <i class="fa fa-plus"></i> Add New Game
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Games Table -->
+<div class="admin-table-wrapper">
+    <div class="table-stats">
+        <div class="stat-item">
+            <span class="stat-label">Total Games</span>
+            <span class="stat-value">248</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">In Stock</span>
+            <span class="stat-value">215</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Out of Stock</span>
+            <span class="stat-value">33</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">On Sale</span>
+            <span class="stat-value">67</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="admin-table games-table">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="selectAll">
+                    </th>
+                    <th>ID</th>
+                    <th>Game</th>
+                    <th>Genre</th>
+                    <th>Platform</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Release Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" class="row-checkbox"></td>
+                    <td><span class="id-badge">#001</span></td>
+                    <td>
+                        <div class="game-info">
+                            <img src="assets/images/trending-01.jpg" alt="Game" class="game-thumb">
+                            <div class="game-details">
+                                <span class="game-title">The Witcher 3: Wild Hunt</span>
+                                <span class="game-desc">Epic RPG adventure</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="genre-badge rpg">RPG</span></td>
+                    <td><span class="platform-badge pc">PC</span></td>
+                    <td>
+                        <div class="price-info">
+                            <span class="current-price">$19.99</span>
+                            <span class="old-price">$39.99</span>
+                        </div>
+                    </td>
+                    <td><span class="stock-badge in-stock">100</span></td>
+                    <td>May 19, 2015</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="row-checkbox"></td>
+                    <td><span class="id-badge">#002</span></td>
+                    <td>
+                        <div class="game-info">
+                            <img src="assets/images/trending-02.jpg" alt="Game" class="game-thumb">
+                            <div class="game-details">
+                                <span class="game-title">Grand Theft Auto V</span>
+                                <span class="game-desc">Action adventure game</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="genre-badge action">Action</span></td>
+                    <td><span class="platform-badge pc">PC</span></td>
+                    <td>
+                        <div class="price-info">
+                            <span class="current-price">$29.99</span>
+                        </div>
+                    </td>
+                    <td><span class="stock-badge in-stock">150</span></td>
+                    <td>Sep 17, 2013</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="row-checkbox"></td>
+                    <td><span class="id-badge">#003</span></td>
+                    <td>
+                        <div class="game-info">
+                            <img src="assets/images/trending-03.jpg" alt="Game" class="game-thumb">
+                            <div class="game-details">
+                                <span class="game-title">Red Dead Redemption 2</span>
+                                <span class="game-desc">Western epic tale</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="genre-badge adventure">Adventure</span></td>
+                    <td><span class="platform-badge ps5">PS5</span></td>
+                    <td>
+                        <div class="price-info">
+                            <span class="current-price">$39.99</span>
+                            <span class="old-price">$59.99</span>
+                        </div>
+                    </td>
+                    <td><span class="stock-badge in-stock">80</span></td>
+                    <td>Oct 26, 2018</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="row-checkbox"></td>
+                    <td><span class="id-badge">#004</span></td>
+                    <td>
+                        <div class="game-info">
+                            <img src="assets/images/trending-04.jpg" alt="Game" class="game-thumb">
+                            <div class="game-details">
+                                <span class="game-title">FIFA 24</span>
+                                <span class="game-desc">Football simulation</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="genre-badge sports">Sports</span></td>
+                    <td><span class="platform-badge ps4">PS4</span></td>
+                    <td>
+                        <div class="price-info">
+                            <span class="current-price">$69.99</span>
+                        </div>
+                    </td>
+                    <td><span class="stock-badge in-stock">120</span></td>
+                    <td>Sep 29, 2023</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="row-checkbox"></td>
+                    <td><span class="id-badge">#005</span></td>
+                    <td>
+                        <div class="game-info">
+                            <img src="assets/images/top-game-01.jpg" alt="Game" class="game-thumb">
+                            <div class="game-details">
+                                <span class="game-title">Elden Ring</span>
+                                <span class="game-desc">Dark fantasy RPG</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="genre-badge rpg">RPG</span></td>
+                    <td><span class="platform-badge pc">PC</span></td>
+                    <td>
+                        <div class="price-info">
+                            <span class="current-price">$44.99</span>
+                            <span class="old-price">$59.99</span>
+                        </div>
+                    </td>
+                    <td><span class="stock-badge low-stock">15</span></td>
+                    <td>Feb 25, 2022</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</div>
+</div>
