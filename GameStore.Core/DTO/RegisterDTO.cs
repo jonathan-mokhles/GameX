@@ -35,7 +35,7 @@ namespace GameStore.Core.DTO
         [Phone (ErrorMessage = "Invalid phone number.")]
         public string? PhoneNumber { get; set; }
 
-        public UserRole Role { get; set; } = UserRole.Customer;
+        public UserRoleEnum Role { get; set; } = UserRoleEnum.Customer;
 
     }
 }

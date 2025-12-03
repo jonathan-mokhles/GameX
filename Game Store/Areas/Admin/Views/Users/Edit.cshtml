@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Edit User";
+
+}
+@model UserUpdateRequestDTO
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="auth-container">
+                    <!-- Register Form -->
+                    <div class="auth-form" id="register-form">
+                        <h4>Edit user</h4>
+                        <form asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-row-custom">
+                                <div class="form-group">
+                                <label asp-for="FirstName" class="form-label">Firstname</label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Choose a First Name" required>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                                <div class="form-group">
+                                <label asp-for="LastName" class="form-label">Lastname</label>
+                                <input asp-for="LastName" class="form-control" placeholder="Choose a lastname" required>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            </div>
+                            <div class="form-row-custom">
+                                <div class="form-group">
+                                <label asp-for="PhoneNumber" class="form-label">Phone</label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Choose a phone" required>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                                <div class="form-group">
+                                <label asp-for="Role" class="form-label">Role</label>
+                                <select asp-for="Role" asp-items="@ViewBag.RolesList" class="form-control" placeholder="Choose a Role" required>
+                                </select>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">Email Address</label>
+                                <input asp-for="Email"  class="form-control" placeholder="Enter your email" required readonly>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="orange-button btn-block">Update User</button>
+                        </form>
+                        @if (ViewData.ModelState.ErrorCount > 0)
+                        {
+                            <div class="alert alert-danger mt-3">
+                                <ul>
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

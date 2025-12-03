@@ -24,7 +24,13 @@ app.UseRouting(); // Choose endpoint based on request
 app.UseAuthentication(); // Reading Identity Cookies
 app.UseAuthorization(); // Check user permissions
 app.MapControllers();// Map attribute routed controllers
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Users}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 app.Run();
