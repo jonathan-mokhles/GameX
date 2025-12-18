@@ -11,8 +11,8 @@ namespace GameStore.Core.Domain.RepositoryContracts
     {
         Task<Genre?> GetByIdAsync(int id);
         Task<IEnumerable<Genre>> GetAllAsync();
-        Task<Genre> AddAsync(Genre genre);
-        Task<Genre> UpdateAsync(Genre genre);
+        Task AddAsync(Genre genre);
+        Task UpdateAsync(Genre genre);
         Task<bool> DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
     }

@@ -18,9 +18,5 @@ namespace GameStore.Core.Domain.RepositoryContracts
         Task<IEnumerable<Game>> GetGamesByPlatformAsync(int platformId);
         Task<IEnumerable<Game>> SearchGamesAsync(string searchTerm);
 
-        Task<IEnumerable<Genre>> GetAllGenresAsync();
-        Task<IEnumerable<Platform>> GetAllPlatformsAsync();
-        Task<Genre> GetGenreByIdAsync(int id);
-        Task<Platform> GetPlatformByIdAsync(int id);
     }
 }

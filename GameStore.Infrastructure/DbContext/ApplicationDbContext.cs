@@ -151,7 +151,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "The Witcher 3: Wild Hunt",
                     Description = "An epic open-world RPG adventure with rich storytelling and immersive gameplay.",
                     Price = 39.99m,
-                    DiscountPrice = 19.99m,
+                    OldPrice = 19.99m,
                     GenreId = 3, // RPG
                     PlatformId = 1, // PC
                     ReleaseDate = new DateTime(2015, 5, 19),
@@ -164,7 +164,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "Grand Theft Auto V",
                     Description = "An action-adventure game set in the fictional state of San Andreas.",
                     Price = 29.99m,
-                    DiscountPrice = null,
+                    OldPrice = null,
                     GenreId = 1, // Action
                     PlatformId = 1, // PC
                     ReleaseDate = new DateTime(2013, 9, 17),
@@ -177,7 +177,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "Red Dead Redemption 2",
                     Description = "An epic tale of life in America's unforgiving heartland in 1899.",
                     Price = 59.99m,
-                    DiscountPrice = 39.99m,
+                    OldPrice = 39.99m,
                     GenreId = 2, // Adventure
                     PlatformId = 2, // PlayStation 5
                     ReleaseDate = new DateTime(2018, 10, 26),
@@ -190,7 +190,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "FIFA 24",
                     Description = "The latest installment in the legendary football game series.",
                     Price = 69.99m,
-                    DiscountPrice = null,
+                    OldPrice = null,
                     GenreId = 4, // Sports
                     PlatformId = 3, // PlayStation 4
                     ReleaseDate = new DateTime(2023, 9, 29),
@@ -203,7 +203,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "Elden Ring",
                     Description = "A dark fantasy action RPG developed by FromSoftware.",
                     Price = 59.99m,
-                    DiscountPrice = 44.99m,
+                    OldPrice = 44.99m,
                     GenreId = 3, // RPG
                     PlatformId = 1, // PC
                     ReleaseDate = new DateTime(2022, 2, 25),
@@ -216,7 +216,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "The Legend of Zelda: Breath of the Wild",
                     Description = "An open-world adventure game for Nintendo Switch.",
                     Price = 59.99m,
-                    DiscountPrice = null,
+                    OldPrice = null,
                     GenreId = 2, // Adventure
                     PlatformId = 6, // Nintendo Switch
                     ReleaseDate = new DateTime(2017, 3, 3),
@@ -229,7 +229,7 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "Resident Evil 4 Remake",
                     Description = "Survival horror game with intense action and terrifying enemies.",
                     Price = 59.99m,
-                    DiscountPrice = null,
+                    OldPrice = null,
                     GenreId = 9, // Horror
                     PlatformId = 2, // PlayStation 5
                     ReleaseDate = new DateTime(2023, 3, 24),
@@ -242,10 +242,10 @@ namespace GameStore.Infrastructure.DbContext
                     Title = "Forza Horizon 5",
                     Description = "Open-world racing game set in a beautiful Mexican landscape.",
                     Price = 59.99m,
-                    DiscountPrice = 39.99m,
+                    OldPrice = 39.99m,
                     GenreId = 7, // Racing
                     PlatformId = 4, // Xbox Series X/S
-                    ReleaseDate = new DateTime(2021, 11, 9),
+                    ReleaseDate = new DateTime  (2021, 11, 9),
                     StockQuantity = 95,
                     ImageUrl = "/images/games/forza5.jpg"
                 }

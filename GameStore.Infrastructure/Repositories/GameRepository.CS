@@ -61,22 +61,7 @@ namespace GameStore.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        async Task<Genre> IGameRepository.GetGenreByIdAsync(int id)
-        {
-            return await _dbContext.Genres.FirstAsync(g => g.Id == id);
-        }
-        async Task<Platform> IGameRepository.GetPlatformByIdAsync(int id)
-        {
-            return await _dbContext.Platforms.FirstAsync(p => p.Id == id);
-        }
-        async Task<IEnumerable<Genre>> IGameRepository.GetAllGenresAsync()
-        {
-            return await _dbContext.Genres.ToListAsync();
-        }
-        async Task<IEnumerable<Platform>> IGameRepository.GetAllPlatformsAsync()
-        {
-            return await _dbContext.Platforms.ToListAsync();
-        }
+
 
     }
 }

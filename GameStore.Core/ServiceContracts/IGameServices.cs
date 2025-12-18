@@ -16,9 +16,9 @@ namespace GameStore.Core.ServiceContracts
         Task<IEnumerable<GameResponseDTO>> SearchGamesByTitleAsync(string title);
         Task<IEnumerable<GameResponseDTO>> GetDiscountedGamesAsync();
         Task<IEnumerable<GameResponseDTO>> GetInStockGamesAsync();
-        Task<GameResponseDTO> AddGameAsync(GameAddRequestDTO gameAddRequest);
+        Task AddGameAsync(GameAddRequestDTO gameAddRequest);
         Task<GameResponseDTO> UpdateGameAsync(GameUpdateRequestDTO gameUpdateRequest);
-        Task<bool> DeleteGameAsync(int id);
-        Task<bool> UpdateStockAsync(int id, int quantity);
+        Task DeleteGameAsync(int id);
+        Task UpdateStockAsync(int id, int quantity);
     }
 }

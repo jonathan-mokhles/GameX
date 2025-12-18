@@ -26,7 +26,7 @@ namespace GameStore.Core.Domain.Entities
         public decimal Price { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? DiscountPrice { get; set; }
+        public decimal? OldPrice { get; set; }
 
         [Required]
         public int GenreId { get; set; }

@@ -36,7 +36,6 @@ namespace Game_Store.Controllers
         {
             if(!ModelState.IsValid)
             {
-                ViewBag.ErrorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
                 return View(loginDTO);
             }
 
@@ -73,7 +72,6 @@ namespace Game_Store.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.ErrorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
                 return View(registerDTO);
             }
 

@@ -3,6 +3,12 @@ using Game_Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel for file uploads
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 104857600; // 100 MB
+});
+
 builder.Services.AddGameStoreServices(builder.Configuration);
 
 

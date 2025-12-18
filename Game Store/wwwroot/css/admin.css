@@ -279,11 +279,6 @@ Admin Panel Styles
     display: block;
 }
 
-.game-desc {
-    font-size: 13px;
-    color: #7a7a7a;
-    display: block;
-}
 
 /* Badges */
 .role-badge,
@@ -332,6 +327,11 @@ Admin Panel Styles
     .genre-badge.racing {
         background-color: #e1f5fe;
         color: #03a9f4;
+    }
+
+    .genre-badge.horror {
+        background-color: #1e1e1e;
+        color: red
     }
 
     .platform-badge.pc {
@@ -542,6 +542,7 @@ Game Form Styles
     border-radius: 25px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
+    margin-top: 30px
 }
 
 .form-card-header {
@@ -743,8 +744,8 @@ Game Form Styles
 }
 
 .btn-form-primary,
-.btn-form-secondary,
-.btn-form-draft {
+.btn-form-secondary
+{
     width: 100%;
     padding: 15px;
     border: none;
@@ -779,16 +780,7 @@ Game Form Styles
         background-color: #e7e7e7;
     }
 
-.btn-form-draft {
-    background-color: #fff3e0;
-    color: #ff9800;
-    border: 2px solid #ff9800;
-}
 
-    .btn-form-draft:hover {
-        background-color: #ff9800;
-        color: #fff;
-    }
 
 /* 
 ---------------------------------------------

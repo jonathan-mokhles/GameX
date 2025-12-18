@@ -1,8 +1,11 @@
 ﻿using GameStore.Core.Domain.IdentityEntities;
 using GameStore.Core.Domain.RepositoryContracts;
+using GameStore.Core.ServiceContracts;
+using GameStore.Core.Services;
 using GameStore.Infrastructure.DbContext;
 using GameStore.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +43,14 @@ namespace Game_Store
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IPlatformRepository, PlatformRepositry>();
+            services.AddScoped<IGenreRepository, GenreRepositry>();
+
+            services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IPlatformService, PlatformService>();
+            services.AddScoped<IGenreService, GenreService>();
+            //services.AddScoped<IReviewService, ReviewService>();
+            //services.AddScoped<IOrderRepository, OrderRepository>();
         }
     }
 }

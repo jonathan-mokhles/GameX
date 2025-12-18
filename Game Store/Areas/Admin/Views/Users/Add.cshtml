@@ -30,12 +30,13 @@
                                 <input asp-for="PhoneNumber" class="form-control" placeholder="Choose a phone" required>
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
-                                <div class="form-group">
+                                
+                            <div class="form-group">
                                 <label asp-for="Role" class="form-label">Role</label>
                                     <select asp-for="Role" asp-items="@ViewBag.RolesList" class="form-control" placeholder="Choose a Role" required>
 
                                     </select>
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
                             </div>
                             <div class="form-group">
