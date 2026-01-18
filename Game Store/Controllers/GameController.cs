@@ -1,5 +1,6 @@
 ﻿using GameStore.Core.DTO;
 using GameStore.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game_Store.Controllers
@@ -14,6 +15,7 @@ namespace Game_Store.Controllers
         }
 
         [Route("{id}")]
+        [AllowAnonymous]
         async public Task<IActionResult> details(int id)
         {
             GameResponseDTO? game =  await _gameService.GetGameByIdAsync(id);
