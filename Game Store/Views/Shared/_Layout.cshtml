@@ -59,13 +59,6 @@
                                 {
                                    <li><a asp-controller="home" asp-action="index" >Home</a></li>
                                 }
-                            @if (ViewData["ActivePage"] == "OurShop")
-                            {
-                                <li><a href="shop.html" class="active">Our Shop</a></li>
-                            }
-                            else{
-                                <li><a href="shop.html">Our Shop</a></li>
-                            }
                             @if (User.IsInRole("Admin") && ViewData["ActivePage"] == "Admin")
                                 {
                                 <li><a asp-area="Admin" asp-controller="Users" asp-action="index" class="active">Admin panel</a></li>
@@ -88,8 +81,6 @@
                                     </a>
                                     <ul class="user-dropdown">
                                         <li><a asp-controller="Account" asp-action="Profile"><i class="fa fa-user-circle"></i> My Profile</a></li>
-                                        <li><a asp-controller="Order" asp-action="MyOrders"><i class="fa fa-shopping-bag"></i> My Orders</a></li>
-                                        <li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> My Cart</a></li>
                                         <li class="divider"></li>
                                         <li>
                                             <form asp-controller="Account" asp-action="Logout" method="post" style="margin: 0;">

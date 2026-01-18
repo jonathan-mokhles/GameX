@@ -98,8 +98,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td> <span class="genre-badge  @ViewBag.GamesClass[game.Genre]">@game.Genre</span> </td>
-                            <td><span class="platform-badge @ViewBag.GamesClass[game.Platform]">@game.Platform</span></td>
+                            <td> <span class="genre-badge  @ViewBag.GamesClass[game.Genre.Name]">@game.Genre.Name</span> </td>
+                            <td><span class="platform-badge @ViewBag.GamesClass[game.Platform.Name]">@game.Platform.Name</span></td>
                             <td>
                                 <div class="price-info">
                                     <span class="current-price">$@game.Price</span>
@@ -107,18 +107,20 @@
                                 </div>
                             </td>
                             <td><span class="stock-badge in-stock">@game.StockQuantity</span></td>
-                            <td>@game.ReleaseDate</td>
+                                <td>@game.ReleaseDate.ToString("MMM, dd yyyy")</td>
                             <td>
                                 <div class="action-buttons">
                                      <a class="action-btn view" asp-controller="Game" asp-action="details" asp-route-id="@game.Id">
                                             <i class="fa fa-eye"></i>
                                     </a>
-                                    <button class="action-btn edit" title="Edit">
+                                     <a class="action-btn view"asp-area="Admin" asp-controller="Games" asp-action="Edit" asp-route-id="@game.Id">
                                         <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete" title="Delete">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    </a>
+                                        <form method="post" asp-area="Admin" asp-controller="Games" asp-action="Delete" asp-route-id="@game.Id"
+                                              onsubmit="return confirmDelete(this);" style="display:inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="action-btn delete"> <i class="fa fa-trash"></i></button>
+                                        </form>
                                 </div>
                             </td>
                         </tr>

@@ -34,7 +34,7 @@ namespace GameStore.Core.Domain.Entities
         [Required]
         public int PlatformId { get; set; }
 
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
 
         [Required]
         public int StockQuantity { get; set; }
@@ -49,6 +49,5 @@ namespace GameStore.Core.Domain.Entities
         [ForeignKey("PlatformId")]
         public virtual Platform Platform { get; set; } = null!;
 
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

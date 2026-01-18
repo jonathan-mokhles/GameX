@@ -19,8 +19,5 @@ namespace GameStore.Core.Domain.IdentityEntities
 
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-        public virtual Cart? Cart { get; set; }
     }
 }

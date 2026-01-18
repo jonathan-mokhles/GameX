@@ -41,16 +41,12 @@ namespace Game_Store
 
 
             services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<IReviewRepository, ReviewRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPlatformRepository, PlatformRepositry>();
             services.AddScoped<IGenreRepository, GenreRepositry>();
 
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IPlatformService, PlatformService>();
             services.AddScoped<IGenreService, GenreService>();
-            //services.AddScoped<IReviewService, ReviewService>();
-            //services.AddScoped<IOrderRepository, OrderRepository>();
         }
     }
 }

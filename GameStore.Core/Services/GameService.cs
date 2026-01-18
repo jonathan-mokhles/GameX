@@ -3,6 +3,7 @@ using GameStore.Core.Domain.RepositoryContracts;
 using GameStore.Core.DTO;
 using GameStore.Core.ServiceContracts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +29,7 @@ namespace GameStore.Core.Services
 
         async Task IGameService.AddGameAsync(GameAddRequestDTO gameAddRequest)
         {
-            string imageName = $"{gameAddRequest.Title}{gameAddRequest.ReleaseDate}{Path.GetExtension(gameAddRequest.ImageFile?.FileName)}";
-            var imagePath= Path.Combine(_imageFolderPath,imageName);
-            using(var fileStream=new FileStream(imagePath,FileMode.Create))
-            {
-                await gameAddRequest.ImageFile.CopyToAsync(fileStream);
-            }
+            string imageName = await AddCoverImage(gameAddRequest.Title + gameAddRequest.ReleaseDate.ToString("MMM yyyy"), gameAddRequest.ImageFile);
 
             Game game = new Game()
             {
@@ -66,8 +62,8 @@ namespace GameStore.Core.Services
                 Description = game.Description,
                 Price = game.Price,
                 OldPrice = game.OldPrice,
-                Genre = game.Genre.Name,
-                Platform = game.Platform.Name,
+                Genre = game.Genre,
+                Platform = game.Platform,
                 ReleaseDate = game.ReleaseDate,
                 StockQuantity = game.StockQuantity,
                 ImageUrl = game.ImageUrl
@@ -91,42 +87,70 @@ namespace GameStore.Core.Services
                 Description = game.Description,
                 Price = game.Price,
                 OldPrice = game.OldPrice,
-                Genre = game.Genre.Name,
-                Platform = game.Platform.Name,
+                Genre = game.Genre,
+                Platform = game.Platform,
                 ReleaseDate = game.ReleaseDate,
                 StockQuantity = game.StockQuantity,
                 ImageUrl = game.ImageUrl
             };
         }
-
-        async Task<IEnumerable<GameResponseDTO>> IGameService.GetGamesByGenreAsync(int genreId)
+        async Task IGameService.UpdateGameAsync(GameUpdateRequestDTO gameUpdateRequest)
         {
-            throw new NotImplementedException();
-        }
+            Game existingGame = await _gameRepository.GetByIdAsync(gameUpdateRequest.Id);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with ID {gameUpdateRequest.Id} not found.");
+            }
+            existingGame.Title = gameUpdateRequest.Title;
+            existingGame.Description = gameUpdateRequest.Description;
+            existingGame.Price = gameUpdateRequest.Price;
+            existingGame.OldPrice = gameUpdateRequest.DiscountPrice;
+            existingGame.GenreId = gameUpdateRequest.GenreId;
+            existingGame.PlatformId = gameUpdateRequest.PlatformId;
+            existingGame.ReleaseDate = gameUpdateRequest.ReleaseDate;
+            existingGame.StockQuantity = gameUpdateRequest.StockQuantity;
+            if (gameUpdateRequest.ImageFile != null)
+            {
+                if(!string.IsNullOrEmpty(gameUpdateRequest.ExistingImageUrl))
+                {
+                    string imagePath = Path.Combine(_imageFolderPath, gameUpdateRequest.ExistingImageUrl);
+                    File.Delete(imagePath);
+                }
 
-        async Task<IEnumerable<GameResponseDTO>> IGameService.GetGamesByPlatformAsync(int platformId)
-        {
-            throw new NotImplementedException();
-        }
+                existingGame.ImageUrl = await AddCoverImage(gameUpdateRequest.Title + gameUpdateRequest.ReleaseDate.ToString("MMM.yyyy"), gameUpdateRequest.ImageFile);
+            }
+            await _gameRepository.UpdateAsync(existingGame);
 
-        async Task<IEnumerable<GameResponseDTO>> IGameService.GetInStockGamesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<IEnumerable<GameResponseDTO>> IGameService.SearchGamesByTitleAsync(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<GameResponseDTO> IGameService.UpdateGameAsync(GameUpdateRequestDTO gameUpdateRequest)
-        {
-            throw new NotImplementedException();
         }
 
         async Task IGameService.UpdateStockAsync(int id, int quantity)
         {
             throw new NotImplementedException();
         }
+
+        async Task<string> AddCoverImage(string Name, IFormFile file)
+        {
+            string imageName = $"{SanitizeFileName(Name)}{Path.GetExtension(file.FileName)?.ToLowerInvariant()}";
+            var imagePath = Path.Combine(_imageFolderPath, imageName);
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+            {
+                 await file.CopyToAsync(fileStream);
+            }
+           return imageName;
+        }
+        private string SanitizeFileName(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return string.Empty;
+
+            // Remove invalid characters
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var sanitized = new string(fileName
+                .Where(ch => !invalidChars.Contains(ch))
+                .ToArray());
+
+            return sanitized.Trim();
+        }
+
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameStore.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251020190516_Initial")]
+    [Migration("20260118111410_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,55 +24,6 @@ namespace GameStore.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("CartItems");
-                });
 
             modelBuilder.Entity("GameStore.Core.Domain.Entities.Game", b =>
                 {
@@ -87,9 +38,6 @@ namespace GameStore.Infrastructure.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<decimal?>("DiscountPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
@@ -97,13 +45,16 @@ namespace GameStore.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<decimal?>("OldPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("PlatformId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("ReleaseDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("StockQuantity")
@@ -127,9 +78,9 @@ namespace GameStore.Infrastructure.Migrations
                         {
                             GameId = 1,
                             Description = "An epic open-world RPG adventure with rich storytelling and immersive gameplay.",
-                            DiscountPrice = 19.99m,
                             GenreId = 3,
                             ImageUrl = "/images/games/witcher3.jpg",
+                            OldPrice = 19.99m,
                             PlatformId = 1,
                             Price = 39.99m,
                             ReleaseDate = new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -152,9 +103,9 @@ namespace GameStore.Infrastructure.Migrations
                         {
                             GameId = 3,
                             Description = "An epic tale of life in America's unforgiving heartland in 1899.",
-                            DiscountPrice = 39.99m,
                             GenreId = 2,
                             ImageUrl = "/images/games/rdr2.jpg",
+                            OldPrice = 39.99m,
                             PlatformId = 2,
                             Price = 59.99m,
                             ReleaseDate = new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -177,9 +128,9 @@ namespace GameStore.Infrastructure.Migrations
                         {
                             GameId = 5,
                             Description = "A dark fantasy action RPG developed by FromSoftware.",
-                            DiscountPrice = 44.99m,
                             GenreId = 3,
                             ImageUrl = "/images/games/eldenring.jpg",
+                            OldPrice = 44.99m,
                             PlatformId = 1,
                             Price = 59.99m,
                             ReleaseDate = new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -214,9 +165,9 @@ namespace GameStore.Infrastructure.Migrations
                         {
                             GameId = 8,
                             Description = "Open-world racing game set in a beautiful Mexican landscape.",
-                            DiscountPrice = 39.99m,
                             GenreId = 7,
                             ImageUrl = "/images/games/forza5.jpg",
+                            OldPrice = 39.99m,
                             PlatformId = 4,
                             Price = 59.99m,
                             ReleaseDate = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -295,67 +246,6 @@ namespace GameStore.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ShippingAddress")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.OrderItem", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PriceAtPurchase")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId", "GameId");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("OrderItems");
-                });
-
             modelBuilder.Entity("GameStore.Core.Domain.Entities.Platform", b =>
                 {
                     b.Property<int>("Id")
@@ -404,40 +294,6 @@ namespace GameStore.Infrastructure.Migrations
                             Id = 6,
                             Name = "Nintendo Switch"
                         });
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReviewDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("GameStore.Core.Domain.IdentityEntities.ApplicationUser", b =>
@@ -715,36 +571,6 @@ namespace GameStore.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Cart", b =>
-                {
-                    b.HasOne("GameStore.Core.Domain.IdentityEntities.ApplicationUser", "User")
-                        .WithOne("Cart")
-                        .HasForeignKey("GameStore.Core.Domain.Entities.Cart", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.CartItem", b =>
-                {
-                    b.HasOne("GameStore.Core.Domain.Entities.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameStore.Core.Domain.Entities.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Game");
-                });
-
             modelBuilder.Entity("GameStore.Core.Domain.Entities.Game", b =>
                 {
                     b.HasOne("GameStore.Core.Domain.Entities.Genre", "Genre")
@@ -762,55 +588,6 @@ namespace GameStore.Infrastructure.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Platform");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("GameStore.Core.Domain.IdentityEntities.ApplicationUser", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.OrderItem", b =>
-                {
-                    b.HasOne("GameStore.Core.Domain.Entities.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameStore.Core.Domain.Entities.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Review", b =>
-                {
-                    b.HasOne("GameStore.Core.Domain.Entities.Game", "Game")
-                        .WithMany("Reviews")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameStore.Core.Domain.IdentityEntities.ApplicationUser", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -862,30 +639,6 @@ namespace GameStore.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Cart", b =>
-                {
-                    b.Navigation("CartItems");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Game", b =>
-                {
-                    b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("GameStore.Core.Domain.IdentityEntities.ApplicationUser", b =>
-                {
-                    b.Navigation("Cart");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

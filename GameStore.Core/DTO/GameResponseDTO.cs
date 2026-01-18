@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GameStore.Core.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameStore.Core.DTO
@@ -24,12 +25,12 @@ namespace GameStore.Core.DTO
         public decimal? OldPrice { get; set; }
 
         [Required]
-        public string? Genre { get; set; }
+        public Genre? Genre { get; set; }
 
         [Required]
-        public string? Platform { get; set; }
+        public Platform? Platform { get; set; }
 
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
 
         [Required]
         public int StockQuantity { get; set; }

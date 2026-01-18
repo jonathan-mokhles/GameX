@@ -50,8 +50,6 @@
 
                             <li><a asp-controller="home" asp-action="index">Home</a></li>
 
-                            <li><a href="shop.html">Our Shop</a></li>
-
                             <li><a asp-area="Admin" asp-controller="Users" asp-action="Index" class="active">Admin panel</a></li>
 
                             <li><a asp-controller="home" asp-action="about">About Us</a></li>
@@ -64,8 +62,6 @@
                                     </a>
                                     <ul class="user-dropdown">
                                         <li><a asp-controller="Account" asp-action="Profile"><i class="fa fa-user-circle"></i> My Profile</a></li>
-                                        <li><a asp-controller="Order" asp-action="MyOrders"><i class="fa fa-shopping-bag"></i> My Orders</a></li>
-                                        <li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> My Cart</a></li>
                                         <li class="divider"></li>
                                         <li>
                                             <form asp-controller="Account" asp-action="Logout" method="post" style="margin: 0;">
@@ -149,34 +145,6 @@
                     <a asp-area="Admin" asp-controller="Games" asp-action="Index" class="admin-nav-item">
                         <i class="fa fa-gamepad"></i>
                         <span>Games</span>
-                    </a>
-                }
-                @if (ViewBag.AdminNavTitle == "Orders")
-                {
-                    <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="admin-nav-item active">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span>Orders</span>
-                    </a>
-                }
-                else
-                {
-                    <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="admin-nav-item">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span>Orders</span>
-                    </a>
-                }
-                @if (ViewBag.AdminNavTitle == "Reviews")
-                {
-                    <a asp-area="Admin" asp-controller="Reviews" asp-action="Index" class="admin-nav-item active">
-                        <i class="fa fa-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                }
-                else
-                {
-                    <a asp-area="Admin" asp-controller="Reviews" asp-action="Index" class="admin-nav-item">
-                        <i class="fa fa-star"></i>
-                        <span>Reviews</span>
                     </a>
                 }
             </div>

@@ -188,50 +188,6 @@ namespace GameStore.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ShippingAddress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
                 {
@@ -240,10 +196,10 @@ namespace GameStore.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    OldPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     GenreId = table.Column<int>(type: "int", nullable: false),
                     PlatformId = table.Column<int>(type: "int", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
@@ -261,88 +217,6 @@ namespace GameStore.Infrastructure.Migrations
                         column: x => x.PlatformId,
                         principalTable: "Platforms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CartId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    PriceAtPurchase = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => new { x.OrderId, x.GameId });
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -405,17 +279,17 @@ namespace GameStore.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Games",
-                columns: new[] { "GameId", "Description", "DiscountPrice", "GenreId", "ImageUrl", "PlatformId", "Price", "ReleaseDate", "StockQuantity", "Title" },
+                columns: new[] { "GameId", "Description", "GenreId", "ImageUrl", "OldPrice", "PlatformId", "Price", "ReleaseDate", "StockQuantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, "An epic open-world RPG adventure with rich storytelling and immersive gameplay.", 19.99m, 3, "/images/games/witcher3.jpg", 1, 39.99m, new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 100, "The Witcher 3: Wild Hunt" },
-                    { 2, "An action-adventure game set in the fictional state of San Andreas.", null, 1, "/images/games/gtav.jpg", 1, 29.99m, new DateTime(2013, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 150, "Grand Theft Auto V" },
-                    { 3, "An epic tale of life in America's unforgiving heartland in 1899.", 39.99m, 2, "/images/games/rdr2.jpg", 2, 59.99m, new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 80, "Red Dead Redemption 2" },
-                    { 4, "The latest installment in the legendary football game series.", null, 4, "/images/games/fifa24.jpg", 3, 69.99m, new DateTime(2023, 9, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 120, "FIFA 24" },
-                    { 5, "A dark fantasy action RPG developed by FromSoftware.", 44.99m, 3, "/images/games/eldenring.jpg", 1, 59.99m, new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 90, "Elden Ring" },
-                    { 6, "An open-world adventure game for Nintendo Switch.", null, 2, "/images/games/zelda.jpg", 6, 59.99m, new DateTime(2017, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 75, "The Legend of Zelda: Breath of the Wild" },
-                    { 7, "Survival horror game with intense action and terrifying enemies.", null, 9, "/images/games/re4.jpg", 2, 59.99m, new DateTime(2023, 3, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 65, "Resident Evil 4 Remake" },
-                    { 8, "Open-world racing game set in a beautiful Mexican landscape.", 39.99m, 7, "/images/games/forza5.jpg", 4, 59.99m, new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 95, "Forza Horizon 5" }
+                    { 1, "An epic open-world RPG adventure with rich storytelling and immersive gameplay.", 3, "/images/games/witcher3.jpg", 19.99m, 1, 39.99m, new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 100, "The Witcher 3: Wild Hunt" },
+                    { 2, "An action-adventure game set in the fictional state of San Andreas.", 1, "/images/games/gtav.jpg", null, 1, 29.99m, new DateTime(2013, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 150, "Grand Theft Auto V" },
+                    { 3, "An epic tale of life in America's unforgiving heartland in 1899.", 2, "/images/games/rdr2.jpg", 39.99m, 2, 59.99m, new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 80, "Red Dead Redemption 2" },
+                    { 4, "The latest installment in the legendary football game series.", 4, "/images/games/fifa24.jpg", null, 3, 69.99m, new DateTime(2023, 9, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 120, "FIFA 24" },
+                    { 5, "A dark fantasy action RPG developed by FromSoftware.", 3, "/images/games/eldenring.jpg", 44.99m, 1, 59.99m, new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 90, "Elden Ring" },
+                    { 6, "An open-world adventure game for Nintendo Switch.", 2, "/images/games/zelda.jpg", null, 6, 59.99m, new DateTime(2017, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 75, "The Legend of Zelda: Breath of the Wild" },
+                    { 7, "Survival horror game with intense action and terrifying enemies.", 9, "/images/games/re4.jpg", null, 2, 59.99m, new DateTime(2023, 3, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 65, "Resident Evil 4 Remake" },
+                    { 8, "Open-world racing game set in a beautiful Mexican landscape.", 7, "/images/games/forza5.jpg", 39.99m, 4, 59.99m, new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 95, "Forza Horizon 5" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -458,22 +332,6 @@ namespace GameStore.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_CartId",
-                table: "CartItems",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartItems_GameId",
-                table: "CartItems",
-                column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserId",
-                table: "Carts",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Games_GenreId",
                 table: "Games",
                 column: "GenreId");
@@ -482,26 +340,6 @@ namespace GameStore.Infrastructure.Migrations
                 name: "IX_Games_PlatformId",
                 table: "Games",
                 column: "PlatformId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_GameId",
-                table: "OrderItems",
-                column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_GameId",
-                table: "Reviews",
-                column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserId",
-                table: "Reviews",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -523,25 +361,10 @@ namespace GameStore.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartItems");
-
-            migrationBuilder.DropTable(
-                name: "OrderItems");
-
-            migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

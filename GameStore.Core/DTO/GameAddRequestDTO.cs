@@ -30,7 +30,7 @@ namespace GameStore.Core.DTO
         public int PlatformId { get; set; }
 
         [Required]
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
 
         [Required]
         public int StockQuantity { get; set; }

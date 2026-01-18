@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game_Store.Controllers
 {
+    [AllowAnonymous]
     [Route("[controller]/[action]")]
     public class HomeController : Controller
     {

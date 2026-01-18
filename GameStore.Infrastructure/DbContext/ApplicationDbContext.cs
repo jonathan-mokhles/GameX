@@ -16,19 +16,13 @@ namespace GameStore.Infrastructure.DbContext
         public DbSet<Game> Games { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Platform> Platforms { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // ========== COMPOSITE KEY CONFIGURATION ==========
-            modelBuilder.Entity<OrderItem>()
-                .HasKey(oi => new { oi.OrderId, oi.GameId });
+
 
             // ========== SEED DATA ==========
             SeedRoles(modelBuilder);
@@ -72,7 +66,8 @@ namespace GameStore.Infrastructure.DbContext
                 LastName = "User",
                 RegistrationDate = new DateTime(2024, 1, 1),
                 SecurityStamp = "ADMIN-SECURITY-STAMP-12345",
-                PasswordHash = "AQAAAAIAAYagAAAAEJ8VxVyJlKhYZ+Lb3O1j9Qv5h7B5LnG8RpQ3Fz1YK4wD8Xc9Nt2Hm6Uf4Ep0Js7Rw==",
+                PasswordHash = "AQAAAAIAAYagAAAAECONiP1tay3gDjMSMFGckOldUWYAQi+ViNCoZTZrCDrLz1ZtYjzJgrgeDC8uwHt17w==",
+
                 ConcurrencyStamp = "c8554266-b401-4519-9aeb-a9283053fc58"
             };
 
@@ -150,8 +145,8 @@ namespace GameStore.Infrastructure.DbContext
                     GameId = 1,
                     Title = "The Witcher 3: Wild Hunt",
                     Description = "An epic open-world RPG adventure with rich storytelling and immersive gameplay.",
-                    Price = 39.99m,
-                    OldPrice = 19.99m,
+                    Price = 19.99m,
+                    OldPrice = 39.99m,
                     GenreId = 3, // RPG
                     PlatformId = 1, // PC
                     ReleaseDate = new DateTime(2015, 5, 19),
@@ -176,8 +171,8 @@ namespace GameStore.Infrastructure.DbContext
                     GameId = 3,
                     Title = "Red Dead Redemption 2",
                     Description = "An epic tale of life in America's unforgiving heartland in 1899.",
-                    Price = 59.99m,
-                    OldPrice = 39.99m,
+                    Price = 39.99m,
+                    OldPrice = 59.99m,
                     GenreId = 2, // Adventure
                     PlatformId = 2, // PlayStation 5
                     ReleaseDate = new DateTime(2018, 10, 26),
@@ -202,8 +197,8 @@ namespace GameStore.Infrastructure.DbContext
                     GameId = 5,
                     Title = "Elden Ring",
                     Description = "A dark fantasy action RPG developed by FromSoftware.",
-                    Price = 59.99m,
-                    OldPrice = 44.99m,
+                    Price = 44.99m,
+                    OldPrice = 59.99m,
                     GenreId = 3, // RPG
                     PlatformId = 1, // PC
                     ReleaseDate = new DateTime(2022, 2, 25),
@@ -241,8 +236,8 @@ namespace GameStore.Infrastructure.DbContext
                     GameId = 8,
                     Title = "Forza Horizon 5",
                     Description = "Open-world racing game set in a beautiful Mexican landscape.",
-                    Price = 59.99m,
-                    OldPrice = 39.99m,
+                    Price = 39.99m,
+                    OldPrice = 59.99m,
                     GenreId = 7, // Racing
                     PlatformId = 4, // Xbox Series X/S
                     ReleaseDate = new DateTime  (2021, 11, 9),

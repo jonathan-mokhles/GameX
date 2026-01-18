@@ -1,0 +1,163 @@
+﻿@{
+    ViewData["Title"] = "Manage Games";
+}
+@model GameUpdateRequestDTO
+
+<div class="admin-section section">
+    <div class="container">
+        <div class="game-form-wrapper">
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Main Form Card -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <h4><i class="fa fa-gamepad"></i> Game Information</h4>
+                        </div>
+                        <div class="form-card-body">
+
+                            <form id="gameForm" asp-area="Admin" asp-controller="Games" asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+
+                                 <input asp-for="Id" type="hidden" >
+                                
+                                <!-- Title -->
+                                <div class="form-group-form">
+                                    <label asp-for="Title" class="form-label-required"></label>
+                                    <input asp-for="Title" class="form-control-form" placeholder="Enter game title" >
+                                    <small class="form-hint">Maximum 200 characters</small>
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="form-group-form">
+                                    <label asp-for="Description" class="form-label-required"></label>
+                                    <textarea class="form-control-form" asp-for="Description" rows="5" placeholder="Enter game description"></textarea>
+                                    <small class="form-hint">Maximum 2000 characters</small>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <!-- Price Row -->
+                                <div class="form-row-custom">
+                                    <div class="form-group-form">
+                                        <label asp-for="Price" class="form-label-required">Regular Price ($)</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa fa-dollar"></i>
+                                            <input type="number" class="form-control-form" asp-for="Price"
+                                                   placeholder="0.00" step="0.01" min="0" >
+                                        </div>
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group-form">
+                                        <label asp-for="DiscountPrice">Discount Price ($)</label>
+                                        <div class="input-with-icon">
+                                            <i class="fa fa-tag"></i>
+                                            <input asp-for="DiscountPrice" type="number" class="form-control-form" name="discountPrice"
+                                                   placeholder="0.00" step="0.01" min="0">
+                                        </div>
+                                        <small class="form-hint">Leave empty if no discount</small>
+                                        <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Genre & platform Row -->
+                                <div class="form-row-custom">
+                                    <div class="form-group-form">
+                                        <label asp-for="GenreId" class="form-label-required">Genre</label>
+                                        <select asp-for="GenreId" asp-items="@ViewBag.GenreSelectItems" class="form-control-form" >
+                                            <option value="">Select Genre</option>
+                                        </select>
+                                        <span asp-validation-for="GenreId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group-form">
+                                        <label asp-for="PlatformId" class="form-label-required">Platform</label>
+                                        <select asp-for="PlatformId" asp-items="@ViewBag.PlatformSelectItems" class="form-control-form" >
+                                            <option value="">Select Platform</option>
+                                        </select>
+                                        <span asp-validation-for="PlatformId" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Stock and Date Row -->
+                                <div class="form-row-custom">
+                                    <div class="form-group-form">
+                                        <label asp-for="StockQuantity" class="form-label-required"></label>
+                                        <div class="input-with-icon">
+                                            <i class="fa fa-box"></i>
+                                            <input  class="form-control-form" asp-for="StockQuantity"
+                                                   placeholder="0" min="0" >
+                                            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-form">
+                                        <label asp-for="ReleaseDate"></label>
+                                        <div class="input-with-icon">
+                                            <i class="fa fa-calendar"></i>
+                                            <input asp-for="ReleaseDate" class="form-control-form" >
+                                            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Image URL -->
+                                <div class="form-group-form">
+                                    <label asp-for="ImageFile"></label>
+                                    <input class="form-control-form" asp-for="ImageFile" data-val="false" accept="image/*" >
+                                        <small class="form-hint">Upload image </small>
+                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                </div>
+
+                                <button type="submit"  class="btn-form-primary">
+                                    <i class="fa fa-check"></i> Edit Game
+                                </button>
+                            </form>
+
+                            @if (ViewData.ModelState.ErrorCount > 0)
+                            {
+                                <div class="alert alert-danger mt-3">
+                                    <ul>
+                                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                        {
+                                            <li>@error.ErrorMessage</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Image Preview Card -->
+                    <div class="form-card preview-card">
+                        <div class="form-card-header">
+                            <h4><i class="fa fa-image"></i> Image Preview</h4>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="image-preview">
+                                <img id="imagePreview" src="~/images/games/@Model.ExistingImageUrl" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    document.getElementById('ImageFile').addEventListener('change', function (event) {
+        const [file] = event.target.files;
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imagePreview').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        });
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
